@@ -54,7 +54,15 @@ define apache::vhost(
     $apache_name        = $apache::params::apache_name,
     $vhost_name         = $apache::params::vhost_name,
     $logroot            = "/var/log/$apache::params::apache_name",
-    $ensure             = 'present'
+    #opciones agregadas
+    $ensure             = 'present',
+    $charset            = 'UTF-8',
+    $limitrequestbody   = 0,
+    #opciones agregadas para php
+    $open_basedir        = false,
+    $memory_limit        = false,
+    $max_execution_time  = false,
+    $cache_by_default    = false,
   ) {
 
   validate_re($ensure, '^(present|absent)$',
