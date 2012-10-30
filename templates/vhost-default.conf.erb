@@ -27,21 +27,21 @@ NameVirtualHost <%= vhost_name %>:<%= port %>
   ServerSignature Off
 
   # opciones adicionales
-  AddDefaultCharset = <%= charset %>
-  LimitRequestBody = <%= limitrequestbody %>
+  AddDefaultCharset <%= charset %>
+  LimitRequestBody <%= limitrequestbody %>
 
   # opciones adicionales de PHP
   <% if open_basedir %>
-  php_admin_value open_basedir = $open_basedir
+  php_admin_value open_basedir $open_basedir
   <% end %>
   <% if memory_limit %>
-  php_admin_value memory_limit = $memory_limit
+  php_admin_value memory_limit $memory_limit
   <% end %>
   <% if max_execution_time %>
-  php_admin_value max_execution_time = $max_execution_time
+  php_admin_value max_execution_time $max_execution_time
   <% end %>
   <% if cache_by_default %>
-  php_admin_flag apc.cache_by_default = $cache_by_default
+  php_admin_flag apc.cache_by_default $cache_by_default
   <% end %>
 
 </VirtualHost>
