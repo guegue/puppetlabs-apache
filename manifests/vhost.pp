@@ -58,7 +58,6 @@ define apache::vhost(
     $access_log         = true,
     $ensure             = 'present'
     #opciones agregadas
-    $ensure             = 'present',
     $charset            = 'UTF-8',
     $limitrequestbody   = 0,
     #opciones agregadas para php
