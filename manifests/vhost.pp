@@ -56,7 +56,7 @@ define apache::vhost(
     $vhost_name         = $apache::params::vhost_name,
     $logroot            = "/var/log/$apache::params::apache_name",
     $access_log         = true,
-    $ensure             = 'present'
+    $ensure             = 'present',
     #opciones agregadas
     $charset            = 'UTF-8',
     $limitrequestbody   = 0,
