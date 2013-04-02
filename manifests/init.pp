@@ -17,7 +17,7 @@ class apache (
   $service_enable = true,
   $serveradmin  = 'root@localhost',
   $sendfile     = false,
-  $purge_vdir   = true
+  $purge_vdir   = false,
 ) {
   include apache::params
 
