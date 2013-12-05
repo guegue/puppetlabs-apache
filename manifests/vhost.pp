@@ -135,6 +135,14 @@ define apache::vhost(
     $fastcgi_socket              = undef,
     $fastcgi_dir                 = undef,
     $additional_includes         = [],
+    #opciones agregadas
+    $charset            = 'UTF-8',
+    $limitrequestbody   = 0,
+    #opciones agregadas para php
+    $open_basedir        = false,
+    $memory_limit        = false,
+    $max_execution_time  = false,
+    $cache_by_default    = false,
   ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -188,7 +196,7 @@ define apache::vhost(
 
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
-  if ! defined(File[$docroot]) {
+  if ! defined(File[$docroot]) and $ensure == 'present' {
     file { $docroot:
       ensure  => directory,
       owner   => $docroot_owner,
@@ -198,7 +206,7 @@ define apache::vhost(
   }
 
   # Same as above, but for logroot
-  if ! defined(File[$logroot]) {
+  if ! defined(File[$logroot]) and $ensure == 'present' {
     file { $logroot:
       ensure  => directory,
       require => Package['httpd'],

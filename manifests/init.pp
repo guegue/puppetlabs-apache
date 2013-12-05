@@ -322,4 +322,23 @@ class apache (
       priority        => '15',
     }
   }
+
+  # add essentials apache 2.4
+  if $::operatingsystem == 'Fedora' and $::operatingsystemrelease >= 18 {
+    file { '/etc/httpd/mod.d/00-mpm.load':
+      ensure  => present,
+      source => 'puppet:///modules/apache/00-mpm.load',
+      notify => Service['httpd'],
+    }
+    file { '/etc/httpd/mod.d/00-systemd.load':
+      ensure  => present,
+      source => 'puppet:///modules/apache/00-systemd.load',
+      notify => Service['httpd'],
+    }
+    file { '/etc/httpd/mod.d/00-base.load':
+      ensure  => present,
+      source => 'puppet:///modules/apache/00-base.load',
+      notify => Service['httpd'],
+    }
+  }
 }
