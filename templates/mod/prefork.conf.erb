@@ -1,3 +1,5 @@
+# needed in 2.4
+LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
 <IfModule mpm_prefork_module>
   StartServers        <%= @startservers %>
   MinSpareServers     <%= @minspareservers %>

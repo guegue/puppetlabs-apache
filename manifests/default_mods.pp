@@ -27,10 +27,10 @@ class apache::default_mods (
         include apache::mod::rewrite
         apache::mod { 'actions': }
         apache::mod { 'auth_digest': }
-        apache::mod { 'authn_alias': }
+        # apache::mod { 'authn_alias': } # not in 2.4
         apache::mod { 'authn_anon': }
         apache::mod { 'authn_dbm': }
-        apache::mod { 'authn_default': }
+        # apache::mod { 'authn_default': } # not in 2.4
         apache::mod { 'authz_dbm': }
         apache::mod { 'authz_owner': }
         apache::mod { 'expires': }
@@ -42,6 +42,15 @@ class apache::default_mods (
         apache::mod { 'suexec': }
         apache::mod { 'usertrack': }
         apache::mod { 'version': }
+        # needed in 2.4
+        apache::mod { 'systemd': }
+        apache::mod { 'unixd': }
+        apache::mod { 'access_compat': }
+        apache::mod { 'authn_core': }
+        apache::mod { 'authz_core': }
+        apache::mod { 'slotmem_shm': }
+        apache::mod { 'socache_shmcb': }
+        apache::mod { 'filter': }
       }
       'freebsd': {
         include apache::mod::cache
@@ -98,7 +107,7 @@ class apache::default_mods (
     include apache::mod::setenvif
     apache::mod { 'auth_basic': }
     apache::mod { 'authn_file': }
-    apache::mod { 'authz_default': }
+    #apache::mod { 'authz_default': } # not in 2.4
     apache::mod { 'authz_groupfile': }
     apache::mod { 'authz_user': }
     apache::mod { 'env': }
