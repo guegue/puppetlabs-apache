@@ -38,4 +38,5 @@ define apache::mod (
     require    => Package['httpd'],
     notify     => Service['httpd'],
   }
+
 }

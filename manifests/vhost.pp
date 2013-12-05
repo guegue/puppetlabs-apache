@@ -92,7 +92,7 @@ define apache::vhost(
 
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
-  if ! defined(File[$docroot]) {
+  if ! defined(File[$docroot]) and $ensure == 'present' {
     file { $docroot:
       ensure => directory,
       owner  => $docroot_owner,
@@ -101,7 +101,7 @@ define apache::vhost(
   }
 
   # Same as above, but for logroot
-  if ! defined(File[$logroot]) {
+  if ! defined(File[$logroot]) and $ensure == 'present' {
     file { $logroot:
       ensure => directory,
     }
@@ -119,6 +119,7 @@ define apache::vhost(
   # - $logroot
   # - $access_log
   # - $name
+  if $ensure == 'present' {
   file { "${priority}-${name}.conf":
     ensure  => $ensure,
     path    => "${apache::params::vdir}/${priority}-${name}.conf",
@@ -133,6 +134,14 @@ define apache::vhost(
     ],
     notify  => Service['httpd'],
   }
+  } else {
+  file { "${priority}-${name}.conf":
+    ensure  => $ensure,
+    path    => "${apache::params::vdir}/${priority}-${name}.conf",
+    notify  => Service['httpd'],
+  }
+  }
+
 
   if $configure_firewall {
     if ! defined(Firewall["0100-INPUT ACCEPT $port"]) {

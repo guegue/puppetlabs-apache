@@ -3,14 +3,14 @@ class apache::mod::default {
   apache::mod { 'alias': }
   apache::mod { 'auth_basic': }
   apache::mod { 'auth_digest': }
-  apache::mod { 'authn_alias': }
+  #apache::mod { 'authn_alias': }
   apache::mod { 'authn_anon': }
   apache::mod { 'authn_dbm': }
-  apache::mod { 'authn_default': }
+  #apache::mod { 'authn_default': }
   apache::mod { 'authn_file': }
-  apache::mod { 'authnz_ldap': }
+  #apache::mod { 'authnz_ldap': }
   apache::mod { 'authz_dbm': }
-  apache::mod { 'authz_default': }
+  #apache::mod { 'authz_default': }
   apache::mod { 'authz_groupfile': }
   apache::mod { 'authz_host': }
   apache::mod { 'authz_owner': }
@@ -28,7 +28,7 @@ class apache::mod::default {
   apache::mod { 'headers': }
   apache::mod { 'include': }
   apache::mod { 'info': }
-  apache::mod { 'ldap': }
+  #apache::mod { 'ldap': }
   apache::mod { 'log_config': }
   apache::mod { 'logio': }
   apache::mod { 'mime': }
