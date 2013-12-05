@@ -13,7 +13,7 @@
 <% if @ssl_compression -%>
   SSLCompression Off
 <% end -%>
-  SSLMutex <%= @ssl_mutex %>
+  # SSLMutex <%= @ssl_mutex %>
   SSLCryptoDevice builtin
   SSLHonorCipherOrder On
   SSLCipherSuite HIGH:MEDIUM:!aNULL:!MD5
