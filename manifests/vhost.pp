@@ -431,7 +431,11 @@ define apache::vhost(
   #   - $wsgi_daemon_process
   #   - $wsgi_process_group
   #   - $wsgi_script_aliases
-  file { "${priority_real}-${filename}.conf":
+
+
+  # do NOT require if ensure == absent
+  if $ensure == 'present' { 
+    file { "${priority_real}-${filename}.conf":
     ensure  => $ensure,
     path    => "${apache::vhost_dir}/${priority_real}-${filename}.conf",
     content => template('apache/vhost.conf.erb'),
@@ -444,6 +448,13 @@ define apache::vhost(
       File[$logroot],
     ],
     notify  => Service['httpd'],
+    }
+  } else {
+    file { "${priority}-${name}.conf":
+      ensure  => $ensure,
+      path    => "${apache::params::vdir}/${priority}-${name}.conf",
+      notify  => Service['httpd'],
+    }
   }
   if $::osfamily == 'Debian' {
     $vhost_enable_dir = $apache::vhost_enable_dir
