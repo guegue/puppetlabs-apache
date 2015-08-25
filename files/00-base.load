@@ -1,0 +1,6 @@
+LoadModule access_compat_module modules/mod_access_compat.so
+LoadModule authn_core_module modules/mod_authn_core.so
+LoadModule authz_core_module modules/mod_authz_core.so
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule slotmem_shm_module modules/mod_slotmem_shm.so
+LoadModule socache_shmcb_module modules/mod_socache_shmcb.so

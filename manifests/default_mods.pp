@@ -111,6 +111,7 @@ class apache::default_mods (
     apache::mod { 'authz_groupfile': }
     apache::mod { 'authz_user': }
     apache::mod { 'env': }
+    apache::mod { 'status': }
   } elsif $mods {
     apache::default_mods::load { $mods: }
   }
