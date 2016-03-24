@@ -142,6 +142,15 @@ define apache::vhost(
   $krb_verify_kdc              = 'on',
   $krb_servicename             = 'HTTP',
   $krb_save_credentials        = 'off',
+  #opciones agregadas
+  $limit_request_field_size    = undef,
+  $charset                     = 'UTF-8',
+  $limitrequestbody            = 0,
+  #opciones agregadas para php
+  $open_basedir                = false,
+  $memory_limit                = false,
+  $max_execution_time          = false,
+  $cache_by_default            = false,
 ) {
   # The base class must be included first because it is used by parameter defaults
   if ! defined(Class['apache']) {
@@ -297,7 +306,7 @@ define apache::vhost(
 
   # This ensures that the docroot exists
   # But enables it to be specified across multiple vhost resources
-  if $manage_docroot and $docroot and ! defined(File[$docroot]) {
+  if $manage_docroot and $docroot and $ensure == 'present' and ! defined(File[$docroot]) {
     file { $docroot:
       ensure  => directory,
       owner   => $docroot_owner,
@@ -309,7 +318,7 @@ define apache::vhost(
   }
 
   # Same as above, but for logroot
-  if ! defined(File[$logroot]) {
+  if ! defined(File[$logroot]) and $ensure == 'present' {
     file { $logroot:
       ensure  => $logroot_ensure,
       owner   => $logroot_owner,
