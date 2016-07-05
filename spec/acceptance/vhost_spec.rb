@@ -115,6 +115,7 @@ describe 'apache::vhost define' do
       it { is_expected.to contain "ProxyPass" }
       it { is_expected.to contain "ProxyPreserveHost On" }
       it { is_expected.to contain "ProxyErrorOverride On" }
+      it { is_expected.not_to contain "ProxyAddHeaders" }
       it { is_expected.not_to contain "<Proxy \*>" }
     end
   end
@@ -142,6 +143,7 @@ describe 'apache::vhost define' do
       it { is_expected.to contain "ProxyPassMatch /foo http://backend-foo/" }
       it { is_expected.to contain "ProxyPreserveHost On" }
       it { is_expected.to contain "ProxyErrorOverride On" }
+      it { is_expected.not_to contain "ProxyAddHeaders" }
       it { is_expected.not_to contain "<Proxy \*>" }
     end
   end
@@ -792,7 +794,7 @@ describe 'apache::vhost define' do
       it { is_expected.to be_file }
       if fact('osfamily') == 'RedHat' and fact('operatingsystemmajrelease') == '7'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
-      elsif fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') =~ /(14\.04|13\.10)/
+      elsif fact('operatingsystem') == 'Ubuntu' and fact('operatingsystemrelease') =~ /(14\.04|13\.10|16\.04)/
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
       elsif fact('operatingsystem') == 'Debian' and fact('operatingsystemmajrelease') == '8'
         it { is_expected.not_to contain 'NameVirtualHost test.server' }
@@ -1292,7 +1294,7 @@ describe 'apache::vhost define' do
 
     describe file("#{$vhost_dir}/25-test.server.conf") do
       it { is_expected.to be_file }
-      it { is_expected.to contain '<DirectoryMatch .*\.(svn|git|bzr)/.*>' }
+      it { is_expected.to contain '<DirectoryMatch .*\.(svn|git|bzr|hg|ht)/.*>' }
     end
   end
 
@@ -1310,6 +1312,7 @@ describe 'apache::vhost define' do
             wsgi_daemon_process_options => {processes => '2'},
             wsgi_process_group          => 'nobody',
             wsgi_script_aliases         => { '/test' => '/test1' },
+            wsgi_script_aliases_match   => { '/test/([^/*])' => '/test1' },
             wsgi_pass_authorization     => 'On',
           }
         EOS
@@ -1332,6 +1335,7 @@ describe 'apache::vhost define' do
             wsgi_import_script_options  => { application-group => '%{GLOBAL}', process-group => 'wsgi' },
             wsgi_process_group          => 'nobody',
             wsgi_script_aliases         => { '/test' => '/test1' },
+            wsgi_script_aliases_match   => { '/test/([^/*])' => '/test1' },
             wsgi_pass_authorization     => 'On',
             wsgi_chunked_request        => 'On',
           }
